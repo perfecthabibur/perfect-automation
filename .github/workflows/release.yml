@@ -79,8 +79,8 @@ jobs:
 
       - name: Build release ZIP
         run: |
-          VERSION="${GITHUB_REF#refs/tags/v}"
-          ZIP_NAME="perfect-automation-${VERSION}.zip"
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          ZIP_NAME="perfect-automation-${TAG_NAME}.zip"
 
           # Create ZIP with plugin directory as root
           # This ensures WordPress installs it to wp-content/plugins/wc-laravel-sync/
@@ -95,8 +95,8 @@ jobs:
 
       - name: Verify ZIP structure
         run: |
-          VERSION="${GITHUB_REF#refs/tags/v}"
-          ZIP_NAME="perfect-automation-${VERSION}.zip"
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          ZIP_NAME="perfect-automation-${TAG_NAME}.zip"
 
           echo "ZIP contents:"
           unzip -l "${ZIP_NAME}"
