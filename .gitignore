@@ -1,0 +1,28 @@
+# Development files
+node_modules/
+vendor/
+composer.lock
+package-lock.json
+package.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# OS files
+.DS_Store
+Desktop.ini
