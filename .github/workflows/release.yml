@@ -1,0 +1,122 @@
+name: Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Build & Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: php-lint, phpstan
+
+      - name: Validate plugin header version matches tag
+        run: |
+          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
+          HEADER_VERSION=$(grep -oP "Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" wc-laravel-sync.php)
+          CONST_VERSION=$(grep -oP "define\('WCLS_VERSION',\s*'\K[0-9]+\.[0-9]+\.[0-9]+" wc-laravel-sync.php)
+
+          echo "Tag version: $TAG_VERSION"
+          echo "Header version: $HEADER_VERSION"
+          echo "Constant version: $CONST_VERSION"
+
+          if [ "$TAG_VERSION" != "$HEADER_VERSION" ]; then
+            echo "ERROR: Tag version ($TAG_VERSION) does not match plugin header version ($HEADER_VERSION)"
+            exit 1
+          fi
+
+          if [ "$TAG_VERSION" != "$CONST_VERSION" ]; then
+            echo "ERROR: Tag version ($TAG_VERSION) does not match WCLS_VERSION constant ($CONST_VERSION)"
+            exit 1
+          fi
+
+          echo "All versions match: $TAG_VERSION"
+
+      - name: PHP Syntax Check
+        run: |
+          find . -name "*.php" -not -path "./.github/*" | while read file; do
+            echo "Checking: $file"
+            php -l "$file"
+          done
+
+      - name: Verify required files exist
+        run: |
+          REQUIRED_FILES=(
+            "wc-laravel-sync.php"
+            "includes/class-wcls-settings.php"
+            "includes/class-wcls-order-sync.php"
+            "includes/class-wcls-api-client.php"
+            "includes/class-wcls-admin.php"
+            "includes/class-wcls-updater.php"
+            "templates/settings-page.php"
+            "assets/admin.css"
+            "assets/admin.js"
+            "readme.txt"
+          )
+
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Required file missing: $file"
+              exit 1
+            fi
+            echo "OK: $file"
+          done
+
+          echo "All required files present."
+
+      - name: Build release ZIP
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          ZIP_NAME="perfect-automation-${VERSION}.zip"
+
+          # Create ZIP with plugin directory as root
+          # This ensures WordPress installs it to wp-content/plugins/wc-laravel-sync/
+          mkdir -p "build/wc-laravel-sync"
+          cp -r wc-laravel-sync.php includes/ templates/ assets/ readme.txt "build/wc-laravel-sync/"
+
+          cd build
+          zip -r "../${ZIP_NAME}" wc-laravel-sync/
+          cd ..
+
+          echo "Created: ${ZIP_NAME}"
+
+      - name: Verify ZIP structure
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          ZIP_NAME="perfect-automation-${VERSION}.zip"
+
+          echo "ZIP contents:"
+          unzip -l "${ZIP_NAME}"
+
+          # Verify the ZIP contains the correct structure
+          if ! unzip -l "${ZIP_NAME}" | grep -q "wc-laravel-sync/wc-laravel-sync.php"; then
+            echo "ERROR: ZIP does not contain wc-laravel-sync/wc-laravel-sync.php"
+            exit 1
+          fi
+
+          if ! unzip -l "${ZIP_NAME}" | grep -q "wc-laravel-sync/includes/"; then
+            echo "ERROR: ZIP does not contain wc-laravel-sync/includes/"
+            exit 1
+          fi
+
+          echo "ZIP structure is correct."
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: perfect-automation-${{ github.ref_name }}.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
