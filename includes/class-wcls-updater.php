@@ -24,7 +24,7 @@ class WCLS_Updater {
         $this->github_repo        = 'perfect-automation';
         $this->api_url            = 'https://api.github.com/repos/' . $this->github_owner . '/' . $this->github_repo;
         $this->installed_version  = WCLS_VERSION;
-        $this->plugin_basename    = plugin_basename(__FILE__);
+        $this->plugin_basename    = plugin_basename(WCLS_PLUGIN_DIR . 'wc-laravel-sync.php');
 
         add_filter('pre_set_site_transient_update_plugins', [$this, 'check_for_update']);
         add_filter('plugins_api', [$this, 'plugins_api_info'], 10, 3);
