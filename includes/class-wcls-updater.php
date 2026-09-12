@@ -34,8 +34,12 @@ class WCLS_Updater {
      * Inject update information into WordPress plugin update transient.
      */
     public function check_for_update($transient) {
-        if (empty($transient->response) || !is_object($transient->response)) {
+        if (!is_object($transient)) {
             return $transient;
+        }
+
+        if (!isset($transient->response) || !is_array($transient->response)) {
+            $transient->response = [];
         }
 
         $remote = $this->get_remote_release();
@@ -153,6 +157,11 @@ class WCLS_Updater {
         if (!$data || !is_array($data)) {
             return null;
         }
+
+        // Extract version from tag_name (e.g., "v1.1.1" -> "1.1.1")
+        $tag = $data['tag_name'] ?? '';
+        $version = preg_replace('/^v/', '', $tag);
+        $data['version'] = $version;
 
         set_transient($cache_key, $data, 12 * HOUR_IN_SECONDS);
 
