@@ -16,7 +16,7 @@ class WCLS_Order_Sync {
 
     private function log($message) {
         if (defined('WC_LOG_DIR') || function_exists('wc_get_logger')) {
-            wc_get_logger()->info($message, ['source' => 'wc-laravel-sync']);
+            wc_get_logger()->info($message, ['source' => 'perfect-automation']);
         }
     }
 

@@ -2,10 +2,10 @@
 /**
  * Plugin Name: Perfect Automation
  * Description: Synchronize WooCommerce orders to a Laravel e-commerce application via secure API.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Habibur Rahman
  * Plugin URI: https://perfectacademy.bd
- * Text Domain: wc-laravel-sync
+ * Text Domain: perfect-automation
  * Requires PHP: 7.4
  * Requires at least: 5.8
  * WC requires at least: 5.0
@@ -13,8 +13,8 @@
 
 defined('ABSPATH') || exit;
 
-define('WCLS_VERSION', '1.1.0');
-define('WCLS_DB_VERSION', '1.1.0');
+define('WCLS_VERSION', '1.1.1');
+define('WCLS_DB_VERSION', '1.1.1');
 define('WCLS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WCLS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -81,7 +81,7 @@ final class WC_Laravel_Sync {
     }
 
     public function init() {
-        load_plugin_textdomain('wc-laravel-sync', false, dirname(plugin_basename(__FILE__)) . '/languages');
+        load_plugin_textdomain('perfect-automation', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
         if (is_admin()) {
             new WCLS_Admin();

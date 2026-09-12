@@ -26,8 +26,8 @@ jobs:
       - name: Validate plugin header version matches tag
         run: |
           TAG_VERSION="${GITHUB_REF#refs/tags/v}"
-          HEADER_VERSION=$(grep -oP "Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" wc-laravel-sync.php)
-          CONST_VERSION=$(grep -oP "define\('WCLS_VERSION',\s*'\K[0-9]+\.[0-9]+\.[0-9]+" wc-laravel-sync.php)
+          HEADER_VERSION=$(grep -oP "Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" perfect-automation.php)
+          CONST_VERSION=$(grep -oP "define\('WCLS_VERSION',\s*'\K[0-9]+\.[0-9]+\.[0-9]+" perfect-automation.php)
 
           echo "Tag version: $TAG_VERSION"
           echo "Header version: $HEADER_VERSION"
@@ -55,7 +55,7 @@ jobs:
       - name: Verify required files exist
         run: |
           REQUIRED_FILES=(
-            "wc-laravel-sync.php"
+            "perfect-automation.php"
             "includes/class-wcls-settings.php"
             "includes/class-wcls-order-sync.php"
             "includes/class-wcls-api-client.php"
@@ -83,12 +83,12 @@ jobs:
           ZIP_NAME="perfect-automation-${TAG_NAME}.zip"
 
           # Create ZIP with plugin directory as root
-          # This ensures WordPress installs it to wp-content/plugins/wc-laravel-sync/
-          mkdir -p "build/wc-laravel-sync"
-          cp -r wc-laravel-sync.php includes/ templates/ assets/ readme.txt "build/wc-laravel-sync/"
+          # This ensures WordPress installs it to wp-content/plugins/perfect-automation/
+          mkdir -p "build/perfect-automation"
+          cp -r perfect-automation.php includes/ templates/ assets/ readme.txt "build/perfect-automation/"
 
           cd build
-          zip -r "../${ZIP_NAME}" wc-laravel-sync/
+          zip -r "../${ZIP_NAME}" perfect-automation/
           cd ..
 
           echo "Created: ${ZIP_NAME}"
@@ -102,13 +102,13 @@ jobs:
           unzip -l "${ZIP_NAME}"
 
           # Verify the ZIP contains the correct structure
-          if ! unzip -l "${ZIP_NAME}" | grep -q "wc-laravel-sync/wc-laravel-sync.php"; then
-            echo "ERROR: ZIP does not contain wc-laravel-sync/wc-laravel-sync.php"
+          if ! unzip -l "${ZIP_NAME}" | grep -q "perfect-automation/perfect-automation.php"; then
+            echo "ERROR: ZIP does not contain perfect-automation/perfect-automation.php"
             exit 1
           fi
 
-          if ! unzip -l "${ZIP_NAME}" | grep -q "wc-laravel-sync/includes/"; then
-            echo "ERROR: ZIP does not contain wc-laravel-sync/includes/"
+          if ! unzip -l "${ZIP_NAME}" | grep -q "perfect-automation/includes/"; then
+            echo "ERROR: ZIP does not contain perfect-automation/includes/"
             exit 1
           fi
 

@@ -18,13 +18,13 @@ class WCLS_Admin {
             'Perfect Automation',
             'Perfect Automation',
             'manage_woocommerce',
-            'wc-laravel-sync',
+            'perfect-automation',
             [$this, 'settings_page']
         );
     }
 
     public function enqueue_assets($hook) {
-        if ($hook !== 'woocommerce_page_wc-laravel-sync') {
+        if ($hook !== 'woocommerce_page_perfect-automation') {
             return;
         }
         wp_enqueue_style('wcls-admin', WCLS_PLUGIN_URL . 'assets/admin.css', [], WCLS_VERSION);

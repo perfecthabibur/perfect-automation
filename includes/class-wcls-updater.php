@@ -24,7 +24,7 @@ class WCLS_Updater {
         $this->github_repo        = 'perfect-automation';
         $this->api_url            = 'https://api.github.com/repos/' . $this->github_owner . '/' . $this->github_repo;
         $this->installed_version  = WCLS_VERSION;
-        $this->plugin_basename    = plugin_basename(WCLS_PLUGIN_DIR . 'wc-laravel-sync.php');
+        $this->plugin_basename    = plugin_basename(WCLS_PLUGIN_DIR . 'perfect-automation.php');
 
         add_filter('pre_set_site_transient_update_plugins', [$this, 'check_for_update']);
         add_filter('plugins_api', [$this, 'plugins_api_info'], 10, 3);
@@ -64,7 +64,7 @@ class WCLS_Updater {
         }
 
         $obj = new stdClass();
-        $obj->slug         = 'wc-laravel-sync';
+        $obj->slug         = 'perfect-automation';
         $obj->plugin       = $this->plugin_basename;
         $obj->new_version  = $remote_version;
         $obj->url          = $remote['html_url'] ?? '';
@@ -89,7 +89,7 @@ class WCLS_Updater {
             return $result;
         }
 
-        if (!isset($args->slug) || $args->slug !== 'wc-laravel-sync') {
+        if (!isset($args->slug) || $args->slug !== 'perfect-automation') {
             return $result;
         }
 
@@ -101,7 +101,7 @@ class WCLS_Updater {
 
         $obj = new stdClass();
         $obj->name         = 'Perfect Automation';
-        $obj->slug         = 'wc-laravel-sync';
+        $obj->slug         = 'perfect-automation';
         $obj->version      = $remote['version'] ?? $this->installed_version;
         $obj->author       = 'Habibur Rahman';
         $obj->author_profile = 'https://perfectacademy.bd';

@@ -5,7 +5,7 @@ Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
 WC requires at least: 5.0
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ Features:
 
 == Installation ==
 
-1. Upload the plugin files to `/wp-content/plugins/wc-laravel-sync/`, or install through the WordPress plugins screen.
+1. Upload the plugin files to `/wp-content/plugins/perfect-automation/`, or install through the WordPress plugins screen.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 3. Navigate to WooCommerce > Perfect Automation to configure your API credentials.
 4. Enter your Laravel application URL, API Key, and API Secret.
@@ -49,6 +49,11 @@ Your settings are stored in the WordPress database (wp_options table) and are ne
 No. All data is stored in standard WordPress options (wp_options table) and WooCommerce order metadata.
 
 == Changelog ==
+
+= 1.1.1 =
+* WooCommerce standard attribute values now display underneath the product image in Laravel Order Index
+* Plugin naming and file structure standardized to "Perfect Automation"
+* Existing order synchronization functionality preserved
 
 = 1.1.0 =
 * Initial public release
