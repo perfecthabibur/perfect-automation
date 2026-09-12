@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Perfect Automation
  * Description: Synchronize WooCommerce orders to a Laravel e-commerce application via secure API.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Habibur Rahman
  * Plugin URI: https://perfectacademy.bd
  * Text Domain: perfect-automation
@@ -13,8 +13,8 @@
 
 defined('ABSPATH') || exit;
 
-define('WCLS_VERSION', '1.1.1');
-define('WCLS_DB_VERSION', '1.1.1');
+define('WCLS_VERSION', '1.1.2');
+define('WCLS_DB_VERSION', '1.1.2');
 define('WCLS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WCLS_PLUGIN_URL', plugin_dir_url(__FILE__));
 

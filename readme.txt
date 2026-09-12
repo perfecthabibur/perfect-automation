@@ -5,7 +5,7 @@ Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
 WC requires at least: 5.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ Your settings are stored in the WordPress database (wp_options table) and are ne
 No. All data is stored in standard WordPress options (wp_options table) and WooCommerce order metadata.
 
 == Changelog ==
+
+= 1.1.2 =
+* Fixed WordPress update detection for GitHub-hosted plugin updates
+* WordPress Plugins page now correctly shows "Update available" for Perfect Automation
+* Version extraction from GitHub tags improved
 
 = 1.1.1 =
 * WooCommerce standard attribute values now display underneath the product image in Laravel Order Index
