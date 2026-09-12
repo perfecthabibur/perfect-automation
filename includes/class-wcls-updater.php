@@ -118,7 +118,13 @@ class WCLS_Updater {
             'changelog'   => $remote['body'] ?? '',
         ];
         $obj->download_link = $this->get_download_url($remote);
-        $obj->banners       = [];
+        $obj->banners       = [
+            'default' => WCLS_PLUGIN_URL . 'assets/images/perfect-automation.png',
+        ];
+        $obj->icons         = [
+            '1x' => WCLS_PLUGIN_URL . 'assets/images/perfect-automation.png',
+            '2x' => WCLS_PLUGIN_URL . 'assets/images/perfect-automation.png',
+        ];
 
         return $obj;
     }
